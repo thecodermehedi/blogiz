@@ -1,9 +1,16 @@
+import LatestBlogs from "@/components/latest-blogs/LatestBlogs";
+import { BACKEND_SERVER_URL } from "@/utils/config";
+
 const HomePage = async () => {
-  return (
-    <>
-      <h1 className="text-center text-4xl my-5">Latest Blogs</h1>
-    </>
-  );
+ const response = await fetch(`${BACKEND_SERVER_URL}/blogs`, {
+  next: {
+   revalidate: 30,
+  }
+ });
+ const blogs = await response.json();
+ return (
+  <LatestBlogs blogs={blogs} />
+ );
 };
 
 export default HomePage;
